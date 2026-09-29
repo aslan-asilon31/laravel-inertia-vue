@@ -15,11 +15,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+
+            // MsproductTypeSeeder::class,
+            StatusSeeder::class,
+            MsActionSeeder::class,
+            MsPageSeeder::class,
+            MsProductCategorySeeder::class,
+            MsProductTypeSeeder::class,
+            MsBrandSeeder::class,
+            MsWarehouseSeeder::class,
+            BranchWarehouseSeeder::class,
+            MsBranchSeeder::class,
+            MsPositionSeeder::class,
+            MsCustomerSeeder::class,
+            MsCustomerAddressSeeder::class,
+
+            MsEmployeeSeeder::class,
+            EmployeePositionSeeder::class,
+            UserSeeder::class,
+            AccessRightGroupSeeder::class,
+            AccessRightPositionSeeder::class,
+            AccessRightPositionStatusSeeder::class,
+            AccessRightPositionWarehouseSeeder::class,
+            AccessRightPositionWarehouseBranchSeeder::class,
+
+            StatusSeeder::class,
+            GiftDatabaseSeeder::class,
+
         ]);
     }
 }

@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Helpers\FormHook\Traits;
+
+use Illuminate\Support\Facades\Gate;
+use App\Models\HakAkses;
+use App\Models\Permission;
+
+trait cekHakAkses
+{
+    public function cekHakAkses(string $permissionId): void
+    {
+        $permission = Permission::find($permissionId);
+        if (!$permission) {
+            abort(403, 'Hak akses tidak ditemukan.');
+        }
+        $status = null;
+        Gate::authorize('index', $permission);
+    }
+}

@@ -1,0 +1,71 @@
+<?php
+
+
+
+namespace App\Helpers\FormHook\Traits;
+
+use App\Models\MsStatus;
+use App\Models\MsBranch;
+use App\Models\User;
+use App\Models\Pelanggan;
+use App\Models\Cabang;
+use App\Models\UserAksesCabang;
+
+trait aksesOpsi
+{
+    public function aksesStatusOption()
+    {
+        $statusList = MsStatus::orderBy('nomor', 'asc')->get();
+        return collect($statusList)->map(function ($status) {
+            return [
+                'id' => $status->id,
+                'name' => $status->name,
+            ];
+        })->values()->toArray();
+    }
+
+    public function aksesUserOption()
+    {
+        $UserList = User::orderBy('nomor', 'asc')->get();
+        return collect($UserList)
+            ->map(function ($User) {
+                return [
+                    'id' => $User->id,
+                    'name' => $User->name,
+                ];
+            })
+            ->unique(function ($item) {
+                return $item['id'];
+            })
+            ->values()
+            ->toArray();
+    }
+
+    public function aksesPelangganOption()
+    {
+        $pelangganList = MsCustomer::orderBy('nomor', 'asc')->get();
+        return collect($pelangganList)
+            ->map(function ($pelanggan) {
+                return [
+                    'id' => $pelanggan->id,
+                    'name' => $pelanggan->name,
+                ];
+            })
+            ->unique(function ($item) {
+                return $item['id'];
+            })
+            ->values()
+            ->toArray();
+    }
+
+    public function aksesCabangOption()
+    {
+        $cabangList = MsBranch::orderBy('nomor', 'asc')->get();
+        return collect($cabangList)->map(function ($cabang) {
+            return [
+                'id' => $cabang->id,
+                'name' => $cabang->name,
+            ];
+        })->values()->toArray();
+    }
+}

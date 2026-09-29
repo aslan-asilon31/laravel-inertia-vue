@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MsAction extends Model
+{
+    use \Illuminate\Database\Eloquent\Concerns\HasUuids;
+
+    protected $table = 'ms_actions';
+
+    protected $guarded = [];
+}

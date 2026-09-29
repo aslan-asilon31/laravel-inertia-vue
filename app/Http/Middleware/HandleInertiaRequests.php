@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\MenuService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,12 +36,22 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // Mengambil user yang sedang login khusus dari guard 'employee'
+        $employeeUser = auth('employee')->user();
+
+        $menuStructure = [];
+        if ($employeeUser) {
+            // Ambil struktur menu dinamis dari database berdasarkan employee yang login
+            $menuStructure = MenuService::getStructure($employeeUser);
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $employeeUser,
             ],
+            'menuStructure' => $menuStructure,
         ];
     }
 }

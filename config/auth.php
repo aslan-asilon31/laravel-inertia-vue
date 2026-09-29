@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-
 return [
 
     /*
@@ -16,8 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        // 'guard' => env('AUTH_GUARD', 'employee'),
+        'guard' => 'employee',
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'employees'),
     ],
 
     /*
@@ -40,8 +39,13 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'ms_employee_accounts',
         ],
+        'employee' => [  // Guard untuk karyawan (MsEmployeeAccount)
+            'driver' => 'session',
+            'provider' => 'ms_employee_accounts',  // Gunakan provider ms_employee_accounts
+        ],
+
     ],
 
     /*
@@ -64,13 +68,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
+            'model' => env('AUTH_MODEL', App\Models\MsEmployeeAccount::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'ms_employee_accounts' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\MsEmployeeAccount::class),
+        ],
+
+
     ],
 
     /*
@@ -93,8 +99,9 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+
+        'employees' => [
+            'provider' => 'ms_employee_accounts',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
